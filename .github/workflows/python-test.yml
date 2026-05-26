@@ -1,4 +1,10 @@
-name: Python Lint & Test
+name: "Python Lint & Test"
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
 
 jobs:
   uv-example:
