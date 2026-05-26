@@ -54,7 +54,7 @@ if not os.path.exists(FILE_PATH):
 def home():
     """Simple 200 response for homepage."""
     log.info("Home ping from IP %s", request.remote_addr)
-    return "OK"
+    return {"status": "OK", "ip": request.remote_addr}
 
 
 @app.route("/download/<secret_path>")
