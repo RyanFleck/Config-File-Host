@@ -23,4 +23,9 @@ USER appuser
 
 EXPOSE 8000
 
-CMD ["uv", "run", "gunicorn", "--bind", "0.0.0.0:8000", "main:app"]
+# Run the application
+CMD ["uv", "run", "gunicorn",
+     "--bind", "0.0.0.0:8000",
+     "--access-logfile", "-",
+     "--error-logfile", "-",
+     "main:app"]
