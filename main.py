@@ -53,6 +53,7 @@ def home():
 def download(secret_path):
     """Provides the protected file if path and key are correct."""
     log.info("Incoming request from IP %s", request.remote_addr)
+    print(f"Incoming request from IP {request.remote_addr}")
 
     # 404 if path doesn't exist
     # Constant-time comparison prevents timing attacks
@@ -95,6 +96,8 @@ if __name__ == "__main__":
         handlers=[logging.StreamHandler(sys.stdout)],
     )
     logging.getLogger("werkzeug").setLevel(logging.INFO)
+    log.setLevel(logging.INFO)
 
-    log.info("Started program.")
+    log.info("(Log-Info) Starting app...")
+    print("(Print) Starting app...")
     app.run(host="0.0.0.0", port=5000)
