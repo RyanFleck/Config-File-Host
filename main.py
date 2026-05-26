@@ -17,7 +17,6 @@ logging.basicConfig(
     format="%(asctime)s %(levelname)s %(name)s: %(message)s",
     handlers=[logging.StreamHandler(sys.stdout)],
 )
-log.propagate = True
 
 # Flask App & Rate Limiting
 app = Flask(__name__)
@@ -54,6 +53,7 @@ if not os.path.exists(FILE_PATH):
 @limiter.limit("10 per minute")
 def home():
     """Simple 200 response for homepage."""
+    log.info("Home ping from IP %s", request.remote_addr)
     return "OK"
 
 
@@ -62,7 +62,6 @@ def home():
 def download(secret_path):
     """Provides the protected file if path and key are correct."""
     log.info("Incoming request from IP %s", request.remote_addr)
-    print(f"(Print) Incoming request from IP {request.remote_addr}")
 
     # 404 if path doesn't exist
     # Constant-time comparison prevents timing attacks
