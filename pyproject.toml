@@ -1,0 +1,11 @@
+[project]
+name = "config-file-host"
+version = "0.1.0"
+description = "Secure hosting of a single file from the filesystem."
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "flask>=3.1.3",
+    "flask-limiter>=4.1.1",
+    "python-dotenv>=1.2.2",
+]
