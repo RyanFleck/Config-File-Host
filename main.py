@@ -10,7 +10,16 @@ from werkzeug.middleware.proxy_fix import ProxyFix
 
 load_dotenv()  # reads variables from a .env file and sets them in os.environ
 
+# Set up logging to STDOUT
 log = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+    handlers=[logging.StreamHandler(sys.stdout)],
+)
+log.propagate = True
+
+# Flask App & Rate Limiting
 app = Flask(__name__)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1)
 limiter = Limiter(
@@ -53,7 +62,7 @@ def home():
 def download(secret_path):
     """Provides the protected file if path and key are correct."""
     log.info("Incoming request from IP %s", request.remote_addr)
-    print(f"Incoming request from IP {request.remote_addr}")
+    print(f"(Print) Incoming request from IP {request.remote_addr}")
 
     # 404 if path doesn't exist
     # Constant-time comparison prevents timing attacks
@@ -89,15 +98,5 @@ def download(secret_path):
 
 
 if __name__ == "__main__":
-    # Set up logging
-    logging.basicConfig(
-        level=logging.INFO,
-        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
-        handlers=[logging.StreamHandler(sys.stdout)],
-    )
-    logging.getLogger("werkzeug").setLevel(logging.INFO)
-    log.setLevel(logging.INFO)
-
     log.info("(Log-Info) Starting app...")
-    print("(Print) Starting app...")
     app.run(host="0.0.0.0", port=5000)
