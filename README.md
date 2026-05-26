@@ -26,11 +26,6 @@ services:
     # Optional: only needed if PROTECTED_FILE points to a host file
     volumes:
       - /your/folder/for/export:/data/export:ro
-    healthcheck:
-      test: ["CMD", "wget", "-qO-", "http://localhost:8000/"]
-      interval: 30s
-      timeout: 5s
-      retries: 3
 
 # .env
 DOWNLOAD_PATH=calendar

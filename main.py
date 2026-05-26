@@ -1,5 +1,6 @@
 from flask import Flask, abort, send_file, request
 import os
+import sys
 import secrets
 import logging
 from flask_limiter import Limiter
@@ -15,6 +16,7 @@ app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1)
 limiter = Limiter(
     key_func=get_remote_address, app=app, default_limits=["10 per minute"]
 )
+# TODO: Add a proper backend for the rate limiter :)
 
 # Pull from environment variables:
 SECRET_PATH = os.environ.get("DOWNLOAD_PATH")
@@ -86,6 +88,13 @@ def download(secret_path):
 
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO)
+    # Set up logging
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s %(levelname)s %(name)s: %(message)s",
+        handlers=[logging.StreamHandler(sys.stdout)],
+    )
+    logging.getLogger("werkzeug").setLevel(logging.INFO)
+
     log.info("Started program.")
     app.run(host="0.0.0.0", port=5000)
