@@ -14,9 +14,11 @@ dependencies = [
 
 [dependency-groups]
 dev = [
+    "flake8>=7.3.0",
     "pytest>=9.0.3",
     "pytest-cov>=7.1.0",
     "pytest-env>=1.6.0",
+    "ruff>=0.15.14",
 ]
 
 [tool.pytest.ini_options]
