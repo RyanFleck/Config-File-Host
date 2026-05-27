@@ -15,7 +15,14 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
+    "pytest-env>=1.6.0",
 ]
 
 [tool.pytest.ini_options]
 pythonpath = "."
+
+[tool.pytest_env]
+DOWNLOAD_PATH = "shared-config"
+DOWNLOAD_KEY = "secret-password"
+PROTECTED_FILE = "tests/data/info.txt"
