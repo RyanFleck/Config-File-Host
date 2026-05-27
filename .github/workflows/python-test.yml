@@ -7,8 +7,7 @@ on:
     branches: [ "master" ]
 
 jobs:
-  uv-example:
-    name: python
+  test:
     runs-on: ubuntu-latest
 
     steps:
