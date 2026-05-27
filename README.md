@@ -1,10 +1,10 @@
-# Config-File-Host
+# Config File Host
 
+![Python 3.12](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)
 [![Python Lint & Test](https://github.com/RyanFleck/Config-File-Host/actions/workflows/python-test.yml/badge.svg?branch=master)](https://github.com/RyanFleck/Config-File-Host/actions/workflows/python-test.yml)
 [![Docker Image CI](https://github.com/RyanFleck/Config-File-Host/actions/workflows/docker-image.yml/badge.svg?branch=master)](https://github.com/RyanFleck/Config-File-Host/actions/workflows/docker-image.yml)
-![Python 3.12](https://img.shields.io/badge/Python-3.12-blue?logo=python&logoColor=white)
 
-Flask app to host a single file from the filesystem with protection.
+Flask app to host a single file from the filesystem with basic protections.
 
 **ToDo**:
 
