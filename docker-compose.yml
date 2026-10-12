@@ -1,0 +1,38 @@
+services:
+  secretfile:
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+    container_name: secretfile
+
+    ports:
+      - "8809:8000"
+
+    env_file:
+      - .env
+
+    # Optional: only needed if PROTECTED_FILE points to a host file
+    volumes:
+      - /home/rflec028/SyncRoot/scripts/export:/data/export:ro
+
+    restart: unless-stopped
+    labels:
+      - "traefik.enable=true"
+      # Add this as CNAME in CloudFlare to server.ryanfleck.ca
+      - "traefik.http.routers.secretfile.rule=Host(`secretfile.ryanfleck.ca`)"
+      - "traefik.http.routers.secretfile.entrypoints=websecure"
+      # This should be set to the INTERNAL port (second item in port config)
+      - "traefik.http.services.secretfile.loadbalancer.server.port=8000"
+      - "traefik.http.routers.secretfile.service=secretfile"
+      - "traefik.http.routers.secretfile.tls.certresolver=lets-encrypt"
+
+    networks:
+      - web
+
+
+
+      
+networks:
+  web:
+    external: true
