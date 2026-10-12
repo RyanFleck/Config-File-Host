@@ -30,18 +30,18 @@ services:
     #   - "traefik.http.routers.secretfile.service=secretfile"
     #   - "traefik.http.routers.secretfile.tls.certresolver=lets-encrypt"
 
-    # networks:
-    #   - web
+    networks:
+      - web
 
-  tunnel:
-    container_name: cloudflared-tunnel
-    image: cloudflare/cloudflared
-    restart: unless-stopped
-    command: tunnel run
-    depends_on:
-      - django
-    env_file:
-      - ./.env
+  # tunnel:
+  #   container_name: cloudflared-tunnel
+  #   image: cloudflare/cloudflared
+  #   restart: unless-stopped
+  #   command: tunnel run
+  #   depends_on:
+  #     - secretfile
+  #   env_file:
+  #     - ./.env
 
 
 
