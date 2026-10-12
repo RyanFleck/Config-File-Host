@@ -1,4 +1,6 @@
 services:
+
+  # The service to expose one synchronized file over the internet
   secretfile:
     build:
       context: .
@@ -17,22 +19,34 @@ services:
       - /home/rflec028/SyncRoot/scripts/export:/data/export:ro
 
     restart: unless-stopped
-    labels:
-      - "traefik.enable=true"
-      # Add this as CNAME in CloudFlare to server.ryanfleck.ca
-      - "traefik.http.routers.secretfile.rule=Host(`secretfile.ryanfleck.ca`)"
-      - "traefik.http.routers.secretfile.entrypoints=websecure"
-      # This should be set to the INTERNAL port (second item in port config)
-      - "traefik.http.services.secretfile.loadbalancer.server.port=8000"
-      - "traefik.http.routers.secretfile.service=secretfile"
-      - "traefik.http.routers.secretfile.tls.certresolver=lets-encrypt"
+    
+    # labels:
+    #   - "traefik.enable=true"
+    #   # Add this as CNAME in CloudFlare to server.ryanfleck.ca
+    #   - "traefik.http.routers.secretfile.rule=Host(`secretfile.ryanfleck.ca`)"
+    #   - "traefik.http.routers.secretfile.entrypoints=websecure"
+    #   # This should be set to the INTERNAL port (second item in port config)
+    #   - "traefik.http.services.secretfile.loadbalancer.server.port=8000"
+    #   - "traefik.http.routers.secretfile.service=secretfile"
+    #   - "traefik.http.routers.secretfile.tls.certresolver=lets-encrypt"
 
-    networks:
-      - web
+    # networks:
+    #   - web
+
+  tunnel:
+    container_name: cloudflared-tunnel
+    image: cloudflare/cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    depends_on:
+      - django
+    env_file:
+      - ./.env
+
 
 
 
       
-networks:
-  web:
-    external: true
+# networks:
+#   web:
+#     external: true
